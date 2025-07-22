@@ -15,7 +15,6 @@ if(isset($_POST['signin'])) {
         $_SESSION['hodlogin'] = $result->UserName;
         $_SESSION['hodemail'] = $result->Email;
         $_SESSION['hodid'] = $result->id;
-        echo "<script>alert({$_SESSION})</script>";
         header("location: dashboard.php");
         exit;
     } else {

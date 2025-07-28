@@ -15,27 +15,37 @@ if(isset($_POST['signin'])) {
     $query-> bindParam(':uname', $uname, PDO::PARAM_STR);
     $query-> bindParam(':password', $password, PDO::PARAM_STR);
     $query-> execute();
-    $results=$query->fetchAll(PDO::FETCH_OBJ);
+    // $results=$query->fetchAll(PDO::FETCH_OBJ);
+    $result=$query->fetch(PDO::FETCH_OBJ);
+
+    if($result) {
+        $_SESSION['eid'] = $result->id;
+        $_SESSION['emplogin'] = $result->EmailId;
+        header("location: dashboard.php");
+        exit;
+    } else {
+        $msg = "Invalid Details";
+    }
     
 
-    if($query->rowCount() > 0) {
-         foreach ($results as $result) {
-            $status=$result->Status;
-            $_SESSION['eid']=$result->id;
-          } 
+    // if($query->rowCount() > 0) {
+    //      foreach ($results as $result) {
+    //         $status=$result->Status;
+    //         $_SESSION['eid']=$result->id;
+    //       } 
 
-        if($status==0) {
-            $msg="Your account is Inactive. Please contact admin";
-        } else{
-            $_SESSION['emplogin']=$_POST['username'];
-            header("location: dashboard.php");
-        } 
-    } 
-    else {
+    //     if($status==0) {
+    //         $msg="Your account is Inactive. Please contact admin";
+    //     } else{
+    //         $_SESSION['emplogin']=$_POST['username'];
+    //         header("location: dashboard.php");
+    //     } 
+    // } 
+    // else {
         
-      echo "<script>alert('Invalid Details');</script>";
+    //   echo "<script>alert('Invalid Details');</script>";
 
-    }
+    // }
 
 }
 
